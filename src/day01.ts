@@ -1,23 +1,10 @@
-import { day01 } from "./input";
+import { readFileToString } from "./utils";
 
-const sample_input = `1abc2
-pqr3stu8vwx
-a1b2c3d4e5f
-treb7uchet`;
+const day01: string = readFileToString("day01");
 
-const sample_input_2 = `two1nine
-eightwothree
-abcone2threexyz
-xtwone3four
-4nineeightseven2
-zoneight234
-7pqrstsixteen`;
-
-const test_input = `eightwo`;
-
-function process1(input: string): number {
-  const lines = input.split("\n");
-  const sum = lines
+export function process1(input: string): number {
+  return input
+    .split("\n")
     .map((line) => {
       if (line.length == 0) {
         return 0;
@@ -39,7 +26,6 @@ function process1(input: string): number {
       return result;
     })
     .reduce((prev, cur) => prev + cur, 0);
-  return sum;
 }
 
 const extractDigit = (
@@ -80,9 +66,9 @@ const extractDigit = (
   }
 };
 
-function process2(input: string): number {
-  const lines = input.split("\n");
-  const sum = lines
+export function process2(input: string): number {
+  return input
+    .split("\n")
     .map((line, lineIdx) => {
       if (line.length == 0) {
         console.log(`zero length line ${lineIdx}`);
@@ -97,10 +83,8 @@ function process2(input: string): number {
         }
         const { value, length } = digitInfo;
         i += length - 1;
-        if (first == undefined) {
-          first = value;
-          break;
-        }
+        first = value;
+        break;
       }
       for (let i = line.length; i >= 0; i--) {
         const digitInfo = extractDigit(line.substring(i));
@@ -109,10 +93,8 @@ function process2(input: string): number {
         }
         const { value, length } = digitInfo;
         i -= length - 1;
-        if (last == undefined) {
-          last = value;
-          break;
-        }
+        last = value;
+        break;
       }
       if (first == undefined || last == undefined) {
         console.log(`no numbers on ${lineIdx}`);
@@ -122,16 +104,9 @@ function process2(input: string): number {
       return result;
     })
     .reduce((prev, cur) => prev + cur, 0);
-  return sum;
 }
 
 export function run(): void {
-  console.log(`result: ${process1(sample_input)}`);
-  console.log(`result: ${process1(test_input)}`);
-  console.log(`result: ${process1(day01)}`);
-
-  console.log(`result: ${process2(sample_input)}`);
-  console.log(`result: ${process2(sample_input_2)}`);
-  console.log(`result: ${process2(test_input)}`);
-  console.log(`result: ${process2(day01)}`);
+  console.log(`result 1: ${process1(day01)}`);
+  console.log(`result 2: ${process2(day01)}`);
 }
