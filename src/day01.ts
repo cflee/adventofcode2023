@@ -1,10 +1,9 @@
-import { readFileToString } from "./utils";
+import { getNonEmptyLines, readFileToString } from "./utils";
 
 const day01: string = readFileToString("day01");
 
 export function process1(input: string): number {
-  return input
-    .split("\n")
+  return getNonEmptyLines(input)
     .map((line) => {
       if (line.length == 0) {
         return 0;
@@ -67,8 +66,7 @@ const extractDigit = (
 };
 
 export function process2(input: string): number {
-  return input
-    .split("\n")
+  return getNonEmptyLines(input)
     .map((line, lineIdx) => {
       if (line.length == 0) {
         console.log(`zero length line ${lineIdx}`);

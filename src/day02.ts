@@ -1,18 +1,20 @@
-type Combo = {
+import { getNonEmptyLines } from "./utils";
+
+interface Combo {
   blue: number;
   green: number;
   red: number;
-};
+}
 
-type Game = {
+interface Game {
   id: number;
   rounds: Combo[];
-};
+}
 
-type GameWithMaxCombo = {
+interface GameWithMaxCombo {
   id: number;
   maxCombo: Combo;
-};
+}
 
 const maxValuesAcrossCombos = (combos: Combo[]): Combo => {
   const max: Combo = {
@@ -28,15 +30,15 @@ const maxValuesAcrossCombos = (combos: Combo[]): Combo => {
   return max;
 };
 
-// 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
 const parseHands = (hands: string): Combo[] => {
+  // 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
   return hands.split("; ").map((hand) => {
+    // 3 blue, 4 red
     const combo: Combo = {
       blue: 0,
       green: 0,
       red: 0,
     };
-    // 3 blue, 4 red
     hand.split(", ").forEach((qtyColour) => {
       // 3 blue
       const parts = qtyColour.split(" ");
@@ -55,8 +57,8 @@ const parseHands = (hands: string): Combo[] => {
   });
 };
 
-// Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
 const parseGame = (line: string): Game => {
+  // Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
   const parts = line.split(": ");
   return {
     id: parseInt(parts[0].substring(5), 10),
@@ -65,9 +67,7 @@ const parseGame = (line: string): Game => {
 };
 
 export const process1 = (input: string): number => {
-  return input
-    .split("\n")
-    .filter((line): boolean => line.length > 0)
+  return getNonEmptyLines(input)
     .map((line): Game => parseGame(line))
     .map(
       (game): GameWithMaxCombo => ({
@@ -85,9 +85,7 @@ export const process1 = (input: string): number => {
 };
 
 export const process2 = (input: string): number => {
-  return input
-    .split("\n")
-    .filter((line): boolean => line.length > 0)
+  return getNonEmptyLines(input)
     .map((line): Game => parseGame(line))
     .map(
       (game): GameWithMaxCombo => ({
