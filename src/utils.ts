@@ -7,3 +7,5 @@ export const readFileToString = (filename: string): string => {
 export const getNonEmptyLines = (input: string): string[] => {
   return input.split("\n").filter((line): boolean => line.length > 0);
 };
+
+export const sumNumbers = (prev: number, cur: number) => prev + cur;
