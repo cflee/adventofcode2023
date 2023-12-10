@@ -58,6 +58,22 @@ export const processMap = (input: number, map: Map): number => {
   return input;
 };
 
+export const reverseMap = (input: number, map: Map): number => {
+  let result: number | undefined = undefined;
+  map.records.forEach((record) => {
+    if (
+      input >= record.destinationStart &&
+      input < record.destinationStart + record.length
+    ) {
+      result = input - record.destinationStart + record.sourceStart;
+    }
+  });
+  if (result != undefined) {
+    return result;
+  }
+  return input;
+};
+
 export const process1 = (input: string): number => {
   const lines: string[] = getLines(input);
   const almanac: Almanac = parseInput(lines);
@@ -71,5 +87,22 @@ export const process1 = (input: string): number => {
 
 export const process2 = (input: string): number => {
   const lines: string[] = getLines(input);
-  return 0;
+  const almanac: Almanac = parseInput(lines);
+  let end = 0;
+  almanac.maps.reverse();
+  while (true) {
+    let num = end;
+    almanac.maps.forEach((map) => {
+      num = reverseMap(num, map);
+    });
+    for (let i = 0; i < almanac.starts.length; i += 2) {
+      if (
+        num >= almanac.starts[i] &&
+        num < almanac.starts[i] + almanac.starts[i + 1]
+      ) {
+        return end;
+      }
+    }
+    end++;
+  }
 };

@@ -1,5 +1,11 @@
 import { expect, test } from "@jest/globals";
-import { parseInput, process1, process2, processMap } from "./day05";
+import {
+  parseInput,
+  process1,
+  process2,
+  processMap,
+  reverseMap,
+} from "./day05";
 import { getLines, readFileToString } from "./utils";
 
 const sampleInput1 = `seeds: 79 14 55 13
@@ -93,6 +99,30 @@ test("processMap", () => {
   expect(processMap(99, map)).toBe(51);
 });
 
+test("reverseMap", () => {
+  const map = {
+    records: [
+      {
+        destinationStart: 50,
+        sourceStart: 98,
+        length: 2,
+      },
+      {
+        destinationStart: 52,
+        sourceStart: 50,
+        length: 48,
+      },
+    ],
+  };
+  expect(reverseMap(0, map)).toBe(0);
+  expect(reverseMap(49, map)).toBe(49);
+  expect(reverseMap(52, map)).toBe(50);
+  expect(reverseMap(53, map)).toBe(51);
+  expect(reverseMap(99, map)).toBe(97);
+  expect(reverseMap(50, map)).toBe(98);
+  expect(reverseMap(51, map)).toBe(99);
+});
+
 test("part 1 example", () => {
   expect(process1(sampleInput1)).toBe(35);
 });
@@ -101,10 +131,10 @@ test("part 1 regression", () => {
   expect(process1(input)).toBe(662197086);
 });
 
-// test("part 2 example", () => {
-//   expect(process2(sampleInput1)).toBe(46);
-// });
+test("part 2 example", () => {
+  expect(process2(sampleInput1)).toBe(46);
+});
 
-// test("part 2 regression", () => {
-//   expect(process2(input)).toBe(-1);
-// });
+test("part 2 regression", () => {
+  expect(process2(input)).toBe(52510809);
+});
