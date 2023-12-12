@@ -92,7 +92,11 @@ export const getTypedHand2 = (hand: Hand): TypedHand => {
   cardCounts.delete("J");
   const cardCountValues = [...cardCounts.values()];
   cardCountValues.sort().reverse();
-  cardCountValues[0] += jokerCount;
+  if (cardCountValues.length > 0) {
+    cardCountValues[0] += jokerCount;
+  } else {
+    cardCountValues[0] = jokerCount;
+  }
 
   let bestType = 0;
   if (cardCountValues[0] == 5) {

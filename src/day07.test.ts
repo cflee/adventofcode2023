@@ -9,6 +9,27 @@ KK677 28
 KTJJT 220
 QQQJA 483`;
 
+// https://www.reddit.com/r/adventofcode/comments/18cr4xr/2023_day_7_better_example_input_not_a_spoiler/
+const sampleInput2 = `2345A 1
+Q2KJJ 13
+Q2Q2Q 19
+T3T3J 17
+T3Q33 11
+2345J 3
+J345A 2
+32T3K 5
+T55J5 29
+KK677 7
+KTJJT 34
+QQQJA 31
+JJJJJ 37
+JAAAA 43
+AAAAJ 59
+AAAAA 61
+2AAAA 23
+2JJJJ 53
+JJJJ2 41`;
+
 const input = readFileToString("day07");
 
 test("parseInput", () => {
@@ -156,6 +177,18 @@ test("getTypedHand2", () => {
     cards: "J33JJ",
     bid: 1,
   });
+  expect(getTypedHand2({ cards: "1122J", bid: 1 })).toEqual({
+    type: 5,
+    cards: "1122J",
+    bid: 1,
+  });
+
+  // bug: all jokers was not handled
+  expect(getTypedHand2({ cards: "JJJJJ", bid: 1 })).toEqual({
+    type: 7,
+    cards: "JJJJJ",
+    bid: 1,
+  });
 });
 
 test("compareTypedHands2", () => {
@@ -212,5 +245,13 @@ test("part 2 example", () => {
 
 test("part 2 regression", () => {
   // 249609189 is too low
-  expect(process2(input) != 249609189).toEqual(true);
+  expect(process2(input)).toEqual(250087440);
+});
+
+test("part 1 ?", () => {
+  expect(process1(sampleInput2)).toBe(6592);
+});
+
+test("part 2 ?", () => {
+  expect(process2(sampleInput2)).toBe(6839);
 });
