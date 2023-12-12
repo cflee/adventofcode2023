@@ -72,6 +72,6 @@ test("part 2 example", () => {
   expect(process2(sampleInput1)).toBe(525152);
 });
 
-// test("part 2 regression", () => {
-//   expect(process2(input)).toBe(-1);
-// });
+test("part 2 regression", () => {
+  expect(process2(input)).toBe(3920437278260);
+});

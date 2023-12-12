@@ -16,18 +16,27 @@ export const parseInput = (lines: string[]): Line[] => {
   });
 };
 
+const cache = new Map();
+
 export const arrangements = (
   condition: string,
   start: number,
   sizes: number[],
 ): number => {
+  const cacheKey = `${condition}#${start}#${sizes.toString()}`;
+  if (cache.has(cacheKey)) {
+    return cache.get(cacheKey);
+  }
   if (sizes.length == 0) {
     if (condition.substring(start).indexOf("#") != -1) {
+      cache.set(cacheKey, 0);
       return 0;
     }
+    cache.set(cacheKey, 1);
     return 1;
   }
   if (start >= condition.length) {
+    cache.set(cacheKey, 0);
     return 0;
   }
   let x = start;
@@ -36,6 +45,7 @@ export const arrangements = (
     x++;
   }
   if (x >= condition.length) {
+    cache.set(cacheKey, 0);
     return 0;
   }
   // we are now at a # or ?
@@ -61,6 +71,7 @@ export const arrangements = (
     // xCandidate is pointing at the ?, but we want to try skipping it
     result += arrangements(condition, xCandidate + 1, sizes);
   }
+  cache.set(cacheKey, result);
   return result;
 };
 
