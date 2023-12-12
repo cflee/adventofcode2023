@@ -20,18 +20,17 @@ export const parseInput = (lines: string[]): Hand[] => {
 };
 
 export const typeHand = (hand: Hand): TypedHand => {
+  let bestType = 0;
   for (let i = 0; i < 5; i++) {
     const matches = hand.cards.match(new RegExp(hand.cards.charAt(i), "g"));
     if (matches!.length == 5) {
-      return {
-        type: 7,
-        ...hand,
-      };
+      if (bestType < 7) {
+        bestType = 7;
+      }
     } else if (matches!.length == 4) {
-      return {
-        type: 6,
-        ...hand,
-      };
+      if (bestType < 6) {
+        bestType = 6;
+      }
     } else if (matches!.length == 3) {
       for (let j = 0; j < 5; j++) {
         if (hand.cards.charAt(j) == hand.cards.charAt(i)) {
@@ -41,15 +40,13 @@ export const typeHand = (hand: Hand): TypedHand => {
           new RegExp(hand.cards.charAt(j), "g"),
         );
         if (matches2!.length == 2) {
-          return {
-            type: 5,
-            ...hand,
-          };
+          if (bestType < 5) {
+            bestType = 5;
+          }
         } else {
-          return {
-            type: 4,
-            ...hand,
-          };
+          if (bestType < 4) {
+            bestType = 4;
+          }
         }
       }
     } else if (matches!.length == 2) {
@@ -61,22 +58,23 @@ export const typeHand = (hand: Hand): TypedHand => {
           new RegExp(hand.cards.charAt(j), "g"),
         );
         if (matches2!.length == 2) {
-          return {
-            type: 3,
-            ...hand,
-          };
+          if (bestType < 3) {
+            bestType = 3;
+          }
         }
       }
-      return {
-        type: 2,
-        ...hand,
-      };
+      if (bestType < 2) {
+        bestType = 2;
+      }
     }
-    return {
-      type: 1,
-      ...hand,
-    };
+    if (bestType < 1) {
+      bestType = 1;
+    }
   }
+  return {
+    type: bestType,
+    ...hand,
+  };
 };
 
 export const process1 = (input: string): number => {
