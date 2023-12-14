@@ -124,5 +124,5 @@ test("part 2 example", () => {
 test("part 2 regression", () => {
   // 30248 is wrong
   // 30275 is too high
-  expect(process2(input)).toBe(-1);
+  expect(process2(input)).toBe(28475);
 });
