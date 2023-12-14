@@ -36,6 +36,9 @@ export const parseInput = (lines: string[]): Almanac => {
       length: p[2],
     });
   }
+  if (records.length > 0) {
+    maps.push({ records: records });
+  }
   return {
     starts,
     maps,
