@@ -42,11 +42,17 @@ export const process1 = (input: string): number => {
   return count;
 };
 
-export const process2 = (input: string): number => {
+export const process2 = (input: string): number[] => {
   const data = parseInput(getNonEmptyLines(input));
   const curs = [...data.nodes.keys()].filter((n) => n.charAt(2) == "A");
+  const memos: Map<string, number>[] = [];
+  const cycles = [];
+  for (let i = 0; i < curs.length; i++) {
+    memos[i] = new Map();
+    cycles[i] = undefined;
+  }
   let count = 0;
-  while (curs.filter((n) => n.charAt(2) == "Z").length != curs.length) {
+  while (cycles.filter((c) => c == undefined).length > 0) {
     const instr = data.instructions.charAt(count % data.instructions.length);
     for (let i = 0; i < curs.length; i++) {
       switch (instr) {
@@ -57,8 +63,14 @@ export const process2 = (input: string): number => {
           curs[i] = data.nodes.get(curs[i])![1];
           break;
       }
+      if (memos[i].has(curs[i])) {
+        cycles[i] = count - memos[i].get(curs[i])!;
+      }
+      if (curs[i].charAt(2) == "Z") {
+        memos[i].set(curs[i], count);
+      }
     }
     count++;
   }
-  return count;
+  return cycles as number[];
 };

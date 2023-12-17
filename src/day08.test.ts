@@ -49,9 +49,11 @@ test("part 1 regression", () => {
 });
 
 test("part 2 example", () => {
-  expect(process2(sampleInput3)).toBe(6);
+  expect(process2(sampleInput3)).toEqual([2, 3]);
 });
 
-// test("part 2 regression", () => {
-//   expect(process2(input)).toEqual(-1);
-// });
+test("part 2 regression", () => {
+  // too low: 69260879921 (LCM from 79, 73, 71, 61, 47, 59)
+  // 18215611419223 (LCM from 20777, 19199, 18673, 16043, 12361, 15517)
+  expect(process2(input)).toEqual([20777, 19199, 18673, 16043, 12361, 15517]);
+});
